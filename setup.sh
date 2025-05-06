@@ -1,6 +1,6 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#! /bin/sh
 
-# 패키지 업데이트 & 패키지 설치
+# 패키지 업데이트
 echo "패키지를 업데이트합니다.."
 if pkg update && pkg upgrade -y; then
     echo "업데이트 완료"
@@ -14,20 +14,47 @@ else
     fi
 fi
 
-echo "1. 필수 패키지 설치하기"
-echo "2. 끝내기"
-read choice
+# 저장소 권한 부여
+termux-setup-storage
 
-if [ "$choice" = "1" ]; then
-    echo "필수 패키지들을 설치합니다"
-    pkg install wget vim git -y
-else
-    echo "종료합니다"
-    exit 1
-fi
+# 패키지 설치
+
+echo "필수 패키지들을 설치합니다"
+pkg install wget vim git -y
+
+install_gimp
+install_proot_Ubuntu
 
 install_proot_Ubuntu() {
     pkg install proot-distro -y
     proot-distro login ubuntu
     curl -fsSL https://code-server.dev/install.sh | sh
+}
+
+install_gimp() {
+    pkg install x11-repo -y
+    pkg install termux-x11-nightly xfwm4 gimp -y
+
+    cat > "startgimp.sh" << 'EOF'
+    #! /bin/bash
+
+    # 디스플레이 지정
+    export DISPLAY=:0
+    echo "지정된 디스플레이 : $DISPLAY"
+    
+    # X 서버 실행
+    termux-x11 :0 &
+    sleep 2
+
+    # X 윈도우 관리자 실행
+    xfwm4 --display=:0 &
+    sleep 2
+
+    #GIMP 실행
+    gimp --display=:0
+EOF
+    
+    chmod +x startgimp.sh
+
+    echo "./startgimp.sh 를 입력하여 GIMP를 실행하세요"    
 }

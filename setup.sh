@@ -16,8 +16,9 @@ fi
 
 echo "1. 필수 패키지 설치하기"
 echo "2. 끝내기"
+read choice
 
-if ["$choice" = "1"] ;then
+if ["$choice" = "1"]; then
     echo "필수 패키지들을 설치합니다"
     pkg install wget vim git -y
 else

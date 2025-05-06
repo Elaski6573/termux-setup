@@ -25,3 +25,9 @@ else
     echo "종료합니다"
     exit 1
 fi
+
+install_proot_Ubuntu() {
+    pkg install proot-distro -y
+    proot-distro login ubuntu
+    curl -fsSL https://code-server.dev/install.sh | sh
+}

@@ -6,7 +6,7 @@ echo "--- Installing Core Packages ---"
 
 # 1. Basic Utilities
 echo "Installing basic utilities (vim, wget)..."
-pkg install -y vim wget
+apt install -y vim wget
 
 # 2. Development Tools
 echo "Would you like to install development tools?"
@@ -19,7 +19,7 @@ case "$dev_choice" in
         ;;
     *)
         echo "Installing development tools..."
-        pkg install -y git gh python clang
+        apt install -y git gh python clang
         ;;
 esac
 

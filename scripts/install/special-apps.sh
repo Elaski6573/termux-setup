@@ -6,8 +6,8 @@ echo "--- Installing Special Apps ---"
 
 install_gimp() {
     echo "Installing GIMP and X11 environment..."
-    pkg install x11-repo -y
-    pkg install termux-x11-nightly xfwm4 gimp -y
+    apt install x11-repo -y
+    apt install termux-x11-nightly xfwm4 gimp -y
 
     # Create start script
     START_SCRIPT="$HOME/startgimp.sh"

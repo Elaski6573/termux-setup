@@ -1,13 +1,13 @@
 #! /bin/sh
 
 install_proot_Ubuntu() {
-    pkg install proot-distro -y
+    apt install proot-distro -y
     proot-distro login ubuntu
     curl -fsSL https://code-server.dev/install.sh | sh
 }
 install_gimp() {
-    pkg install x11-repo -y
-    pkg install termux-x11-nightly xfwm4 gimp -y
+    apt install x11-repo -y
+    apt install termux-x11-nightly xfwm4 gimp -y
 
     cat > "startgimp.sh" << 'EOF'
     #! /bin/bash
@@ -35,25 +35,20 @@ EOF
 
 # 패키지 업데이트
 echo "패키지를 업데이트합니다.."
-if pkg update && pkg upgrade -y; then
+if apt update && apt upgrade -y; then
     echo "업데이트 완료"
 else
-    echo "pkg에서 오류가 발생하여 apt로 대체하여 실행합니다."
-    if apt-get update && apt-get upgrade -y; then
-        echo "업데이트 완료"
-    else
-        echo "오류가 발생했습니다. 자세한 사항은 로그를 확인하세요"
-        exit 1
-    fi
+    echo "apt에서 오류가 발생했습니다."
+    exit 1
 fi
 
 # 저장소 권한 부여
-termux-setup-storage
+# termux-setup-storage (Ubuntu에서는 불필요하거나 다른 방식 사용)
 
 # 패키지 설치
 
 echo "필수 패키지들을 설치합니다"
-pkg install wget vim git -y
+apt install wget vim git -y
 
 install_gimp
 install_proot_Ubuntu

@@ -4,9 +4,9 @@
 
 echo "--- Installing Gemini CLI ---"
 
-# 1. Install Node.js
-echo "Installing nodejs-lts..."
-pkg install -y nodejs-lts
+# 1. Install Dependencies
+echo "Installing required dependencies (Node.js, Python, Clang)..."
+apt install -y nodejs python3 clang
 
 # 2. Set GYP_DEFINES for installation
 export GYP_DEFINES="android_ndk_path=/data/data/com.termux/files/usr/share/ndk"
